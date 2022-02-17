@@ -79,4 +79,14 @@ jobs:
           EOF)
           echo $ACCESS_TOKEN > access_token.txt
           echo ::set-output name=access_token::$ACCESS_TOKEN
-     
+          
+    - name: 'Access secret'
+      run: |-
+          curl https://dialogflow.googleapis.com/v2/projects/third-current-338811/agent:restore \
+            --header "Authorization: Bearer ${{ steps.access_token.outputs.access_token }}"
+            --header 'Accept: application/json' \
+           --header 'Content-Type: application/json' \
+           --data '{"agentUri":"gs://dialogflowbucketmigration/FlightAssistant.zip"}' \
+           --compressed
+
+          
