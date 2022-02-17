@@ -85,8 +85,8 @@ jobs:
           curl https://dialogflow.googleapis.com/v2/projects/third-current-338811/agent:restore \
             --header "Authorization: Bearer ${{ steps.access_token.outputs.access_token }}"
             --header 'Accept: application/json' \
-           --header 'Content-Type: application/json' \
-           --data '{"agentUri":"gs://dialogflowbucketmigration/FlightAssistant.zip"}' \
-           --compressed
+            --header 'Content-Type: application/json' \
+            --data '{"agentUri":"gs://dialogflowbucketmigration/FlightAssistant.zip"}' \
+            --compressed
 
           
