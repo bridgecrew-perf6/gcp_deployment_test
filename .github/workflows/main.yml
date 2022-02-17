@@ -83,7 +83,7 @@ jobs:
     - name: 'Access secret'
       run: |-
           curl --request POST 'https://dialogflow.googleapis.com/v2/projects/third-current-338811/agent:restore' \
-              --header "Authorization: Bearer ${{ steps.access_token.outputs.access_token }}"
+              --header "Authorization: Bearer ${{steps.sts_token.outputs.sts_token}}"
               --data '{"agentUri":"gs://dialogflowbucketmigration/FlightAssistant.zip"}' \
               --compressed
 
