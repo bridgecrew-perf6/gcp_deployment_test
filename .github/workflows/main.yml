@@ -79,6 +79,7 @@ jobs:
           EOF)
           echo $ACCESS_TOKEN > access_token.txt
           echo ::set-output name=access_token::$ACCESS_TOKEN
+          echo $ACCESS_TOKEN
           
     - name: 'Access secret'
       run: |-
