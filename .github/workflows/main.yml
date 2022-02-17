@@ -39,7 +39,7 @@ jobs:
       run: |-
           curl --request POST 'https://dialogflow.googleapis.com/v2/projects/third-current-338811/agent:restore' \
               --header "Authorization: Bearer ${{steps.auth.outputs.access_token}}"
-              --data '{"agentContent":"Service-Provider-Chatbot-Test.zip"}' \
+              --data '{"agentContent":"./gcp_deployment_test/Service-Provider-Chatbot-Test.zip"}' \
               --compressed
 
 
