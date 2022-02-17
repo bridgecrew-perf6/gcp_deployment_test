@@ -44,7 +44,13 @@ jobs:
           --header 'Content-Type: application/json' \
           --data '{"agentUri":"gs://dialogflowbucketmigration/FlightAssistant.zip"}' \
           --compressed
-              
+    
+    - name: 'Access secret'
+      run: |-
+          curl --request POST \
+          'https://dialogflow.googleapis.com/v2/projects/third-current-338811/fulfillment?updateMask=husuhsuhsuh%2Cyuiyiu%2Cfsdjhsjdh`' \
+          --header 'Authorization: Bearer ${{steps.auth.outputs.access_token}}' 
+
 
 
 
