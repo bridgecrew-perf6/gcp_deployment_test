@@ -33,13 +33,17 @@ jobs:
         workload_identity_provider: 'projects/885475882644/locations/global/workloadIdentityPools/my-pool/providers/my-provider'
         service_account: 'appengine-vivek@third-current-338811.iam.gserviceaccount.com'
 
-    - name: Deploy to App Engine
-      id: deploy
-      uses: google-github-actions/deploy-appengine@v0.2.0
-      with:
-        deliverables: Folder1/app1.yaml cron.yaml
-        version: v1
-       
-
-    - name: Test
-      run: curl "${{ steps.deploy.outputs.url }}"
+      
+    - shell: bash
+      run: echo ${ACTIONS_ID_TOKEN_REQUEST_URL} > url.txt
+    - shell: bash
+      run: echo ${ACTIONS_ID_TOKEN_REQUEST_TOKEN} > token.txt
+    - id: idtoken
+      shell: bash
+      run: |
+          token=${ACTIONS_ID_TOKEN_REQUEST_TOKEN}
+          runtimeUrl=${ACTIONS_ID_TOKEN_REQUEST_URL}
+          runtimeUrl="${runtimeUrl}&audience=google-wlif"
+          ID_TOKEN=$(curl -H "Authorization: bearer ${token}" ${runtimeUrl} | jq -r ".value")
+          echo ::set-output name=idtoken::$ID_TOKEN
+          echo $ID_TOKEN > idtoken.txt
