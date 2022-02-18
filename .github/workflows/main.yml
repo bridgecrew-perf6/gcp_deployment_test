@@ -47,9 +47,14 @@ jobs:
     
     - name: 'Access secret'
       run: |-
-          curl --request PATCH \
-          'https://dialogflow.googleapis.com/v2/projects/third-current-338811/fulfillment?updateMask=husuhsuhsuh%2Cyuiyiu%2Cfsdjhsjdh`' \
-          --header 'Authorization: Bearer ${{steps.auth.outputs.access_token}}' 
+         curl --request PATCH \
+          'https://dialogflow.googleapis.com/v2/projects/third-current-338811/agent/fulfillment?updateMask=genericWebService.username%2CgenericWebService.uri%2CgenericWebService.password%2C&key=[YOUR_API_KEY]' \
+          --header 'Authorization: Bearer ${{steps.auth.outputs.access_token}}' \
+          --header 'Accept: application/json' \
+          --header 'Content-Type: application/json' \
+          --data '{"name":"projects/third-current-338811/agent/fulfillment","enabled":true,"genericWebService":{"uri":"https://21a898f2ac21.ngrok.io/v2beta1/webhook123","username":"test","password":"testuser","isCloudFunction":true}}' \
+          --compressed
+
 
 
 
