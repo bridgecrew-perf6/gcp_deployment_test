@@ -43,20 +43,8 @@ jobs:
       uses: 'google-github-actions/upload-cloud-storage@v0'
       with:
         path: 'Folder1'
-        destination: 'dialogflowbucketmigration'
+        destination: 'dialogflowbucketmigration/${{ steps.current-time.outputs.time }}/'
         parent: false
-        
-    - name: 'Set up Cloud SDK'
-      uses: 'google-github-actions/setup-gcloud@v0'
-        
-    - name: 'Copying export metadata in the QA'
-      run:  |
-          gcloud auth login
-          export latestBucket=$(gsutil ls gs://dialogflowbucketmigration/ | tail -1)
-          echo "${latestBucket}"
-          export newBucket="${latestBucket} ${{ steps.current-time.outputs.time }}"    
-    
-
       
     - name: 'Access secret'
       run: |-
@@ -65,7 +53,7 @@ jobs:
           --header 'Authorization: Bearer ${{steps.auth.outputs.access_token}}' \
           --header 'Accept: application/json' \
           --header 'Content-Type: application/json' \
-          --data '{"agentUri":"${latestBucket}"}' \
+          --data '{"agentUri":"${{ steps.upload-file.outputs.uploaded }}"}' \
           --compressed
     
     - name: 'Change credentials'
