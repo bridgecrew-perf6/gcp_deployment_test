@@ -46,6 +46,9 @@ jobs:
         destination: 'dialogflowbucketmigration'
         parent: false
         
+    - name: 'Set up Cloud SDK'
+      uses: 'google-github-actions/setup-gcloud@v0'
+        
     - name: 'Copying export metadata in the QA'
       run:  |
           export latestBucket=$(gsutil ls gs://dialogflowbucketmigration/ | tail -1)
