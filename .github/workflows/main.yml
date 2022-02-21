@@ -25,6 +25,13 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v2
+  
+    - name: Get current time
+      uses: gerred/actions/current-time@master
+      id: current-time
+    - name: Use current time
+      env:
+        TIME: "${{ steps.current-time.outputs.time }}"
    
     - id: 'auth'
       name: 'Authenticate to Google Cloud'
