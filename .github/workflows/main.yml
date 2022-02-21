@@ -58,7 +58,7 @@ jobs:
     - name: 'Change credentials'
       run: |-
          curl --request PATCH \
-          'https://dialogflow.googleapis.com/v2/projects/third-current-338811/agent/fulfillment?updateMask=genericWebService.username%2CgenericWebService.uri%2CgenericWebService.password%2C&key=[YOUR_API_KEY]' \
+          'https://dialogflow.googleapis.com/v2/projects/third-current-338811/agent/fulfillment?updateMask=genericWebService.username%2CgenericWebService.uri%2CgenericWebService.password%2C' \
           --header 'Authorization: Bearer ${{steps.auth.outputs.access_token}}' \
           --header 'Accept: application/json' \
           --header 'Content-Type: application/json' \
