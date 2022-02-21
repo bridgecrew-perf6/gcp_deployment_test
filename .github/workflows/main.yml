@@ -45,8 +45,7 @@ jobs:
           export latestBucket=$(gsutil ls gs://dialogflowbucketmigration/ | tail -1)
           
     - name: 'Renaming filename'
-      run:  |
-          export latestBucket=$Time         
+      run: echo 'The time was ${{ steps.hello.outputs.time }}.'        
     
 
       
