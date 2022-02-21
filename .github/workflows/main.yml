@@ -44,6 +44,7 @@ jobs:
       with:
         path: 'Folder1'
         destination: 'dialogflowbucketmigration'
+        parent: false
         
     - name: 'Copying export metadata in the QA'
       run:  |
