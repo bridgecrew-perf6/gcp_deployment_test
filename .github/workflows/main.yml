@@ -29,9 +29,7 @@ jobs:
     - name: Get current time
       uses: gerred/actions/current-time@master
       id: current-time
-    - name: Use current time
-      env:
-        TIME: "${{ steps.current-time.outputs.time }}"
+      
    
     - id: 'auth'
       name: 'Authenticate to Google Cloud'
@@ -52,7 +50,7 @@ jobs:
           export latestBucket=$(gsutil ls gs://dialogflowbucketmigration/ | tail -1)
           
     - name: 'Renaming filename'
-      run: echo 'The time was ${{ steps.hello.outputs.time }}.'        
+      run: echo "${{ steps.current-time.outputs.time }}"       
     
 
       
