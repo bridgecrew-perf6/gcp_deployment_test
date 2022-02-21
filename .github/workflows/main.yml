@@ -43,6 +43,11 @@ jobs:
     - name: 'Copying export metadata in the QA'
       run:  |
           export latestBucket=$(gsutil ls gs://dialogflowbucketmigration/ | tail -1)
+          
+    - name: 'Renaming filename'
+      run:  |
+          export latestBucket=$Time         
+    
 
       
     - name: 'Access secret'
