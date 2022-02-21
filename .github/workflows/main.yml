@@ -39,6 +39,10 @@ jobs:
       with:
         path: 'Service-Provider-Chatbot-Test.zip'
         destination: 'dialogflowbucketmigration'
+        
+    - name: 'Copying export metadata in the QA'
+      run:  |
+          export latestBucket=$(gsutil ls gs://dialogflowbucketmigration/ | tail -1)
 
       
     - name: 'Access secret'
@@ -48,7 +52,7 @@ jobs:
           --header 'Authorization: Bearer ${{steps.auth.outputs.access_token}}' \
           --header 'Accept: application/json' \
           --header 'Content-Type: application/json' \
-          --data '{"agentContent":"Service-Provider-Chatbot-Test.zip"}' \
+          --data '{"agentUri":"latestBucket"}' \
           --compressed
     
     - name: 'Change credentials'
