@@ -50,7 +50,7 @@ jobs:
           export latestBucket=$(gsutil ls gs://dialogflowbucketmigration/ | tail -1)
           
     - name: 'Renaming filename'
-      run: latestBucket= ${latestBucket}${{ steps.current-time.outputs.time }}"       
+      run: latestBucket= "${latestBucket}${{ steps.current-time.outputs.time }}"       
     
 
       
