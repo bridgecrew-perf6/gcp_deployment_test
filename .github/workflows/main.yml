@@ -43,7 +43,7 @@ jobs:
       uses: 'google-github-actions/upload-cloud-storage@v0'
       with:
         path: 'Folder1'
-        destination: 'dialogflowbucketmigration/Service-Provider-Chatbot-Test1.zip'
+        destination: 'dialogflowbucketmigration'
         
     - name: 'Copying export metadata in the QA'
       run:  |
