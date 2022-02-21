@@ -48,7 +48,7 @@ jobs:
     - name: 'Copying export metadata in the QA'
       run:  |
           export latestBucket=$(gsutil ls gs://dialogflowbucketmigration/ | tail -1)
-          export newBucket="${latestBucket}${{ steps.current-time.outputs.time }}"    
+          export newBucket="${latestBucket} ${{ steps.current-time.outputs.time }}"    
     
 
       
