@@ -50,7 +50,7 @@ jobs:
           export latestBucket=$(gsutil ls gs://dialogflowbucketmigration/ | tail -1)
           
     - name: 'Renaming filename'
-      run: latestBucket= latestBucket"${{ steps.current-time.outputs.time }}"       
+      run: latestBucket= ${latestBucket}${{ steps.current-time.outputs.time }}"       
     
 
       
@@ -61,7 +61,7 @@ jobs:
           --header 'Authorization: Bearer ${{steps.auth.outputs.access_token}}' \
           --header 'Accept: application/json' \
           --header 'Content-Type: application/json' \
-          --data '{"agentUri":"latestBucket"}' \
+          --data '{"agentUri":"${latestBucket}"}' \
           --compressed
     
     - name: 'Change credentials'
