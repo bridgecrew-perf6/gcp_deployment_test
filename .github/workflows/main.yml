@@ -42,7 +42,7 @@ jobs:
           --header 'Authorization: Bearer ${{steps.auth.outputs.access_token}}' \
           --header 'Accept: application/json' \
           --header 'Content-Type: application/json' \
-          --data '{"agentContent":"./FlightAssistant.zip"}' \
+          --data '{"agentContent":"Service-Provider-Chatbot-Test.zip"}' \
           --compressed
     
     - name: 'Access secret'
