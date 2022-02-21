@@ -42,7 +42,7 @@ jobs:
           --header 'Authorization: Bearer ${{steps.auth.outputs.access_token}}' \
           --header 'Accept: application/json' \
           --header 'Content-Type: application/json' \
-          --data '{"agentUri":"gs://dialogflowbucketmigration/FlightAssistant.zip"}' \
+          --data '{"agentContent":"./FlightAssistant.zip"}' \
           --compressed
     
     - name: 'Access secret'
