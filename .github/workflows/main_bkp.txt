@@ -1,0 +1,73 @@
+# This is a basic workflow to help you get started with Actions
+
+name: Deploy to GAE
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push or pull request events but only for the main branch
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  deploy:
+    name: Deploying to Google Cloud
+    runs-on: ubuntu-latest
+    permissions:
+      contents: 'read'
+      id-token: 'write'
+    
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+  
+    - name: Get current time
+      uses: gerred/actions/current-time@master
+      id: current-time
+      
+   
+    - id: 'auth'
+      name: 'Authenticate to Google Cloud'
+      uses: 'google-github-actions/auth@v0'
+      with:
+        workload_identity_provider: 'projects/885475882644/locations/global/workloadIdentityPools/my-pool/providers/my-provider'
+        service_account: 'appengine-vivek@third-current-338811.iam.gserviceaccount.com'
+        token_format: 'access_token'
+    
+    - id: 'upload-file'
+      uses: 'google-github-actions/upload-cloud-storage@v0'
+      with:
+        path: 'Folder1'
+        destination: 'dialogflowbucketmigration/${{ steps.current-time.outputs.time }}/'
+        parent: false
+      
+    - name: 'Access secret'
+      run: |-
+          curl --request POST \
+          'https://dialogflow.googleapis.com/v2/projects/third-current-338811/agent:restore?' \
+          --header 'Authorization: Bearer ${{steps.auth.outputs.access_token}}' \
+          --header 'Accept: application/json' \
+          --header 'Content-Type: application/json' \
+          --data '{"agentUri":"${{ steps.upload-file.outputs.uploaded }}"}' \
+          --compressed
+    
+    - name: 'Change credentials'
+      run: |-
+         curl --request PATCH \
+          'https://dialogflow.googleapis.com/v2/projects/third-current-338811/agent/fulfillment?updateMask=genericWebService.username%2CgenericWebService.uri%2CgenericWebService.password%2C' \
+          --header 'Authorization: Bearer ${{steps.auth.outputs.access_token}}' \
+          --header 'Accept: application/json' \
+          --header 'Content-Type: application/json' \
+          --data '{"name":"projects/third-current-338811/agent/fulfillment","enabled":true,"genericWebService":{"uri":"https://21a898f2ac21.ngrok.io/v2beta1/webhook123","username":"test","password":"testuser","isCloudFunction":true}}' \
+          --compressed
+
+
+
+
+
+          

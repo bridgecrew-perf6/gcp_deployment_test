@@ -39,32 +39,28 @@ jobs:
         service_account: 'appengine-vivek@third-current-338811.iam.gserviceaccount.com'
         token_format: 'access_token'
     
-    - id: 'upload-file'
-      uses: 'google-github-actions/upload-cloud-storage@v0'
+    - id: 'secrets'
+      uses: 'google-github-actions/get-secretmanager-secrets@v0'
       with:
-        path: 'Folder1'
-        destination: 'dialogflowbucketmigration/${{ steps.current-time.outputs.time }}/'
-        parent: false
+        secrets: |-
+          token:projects/third-current-338811/secrets/serviceaccountkey/versions/1
+
+    - name: Create a Env file
+      run:  |
+        touch ${{ inputs.artifact_name }}/app_engine/env.yaml
+        echo '${{ steps.secrets.outputs.token }}' >> app_engine/env.yaml
+      # echo '${{ steps.secrets.outputs.token }}' >> ${{ inputs.artifact_name }}/app_engine/env.yaml
+      shell:  bash
+          
+    - name: Deploy to App Engine
+      id: deploy
+      uses: google-github-actions/deploy-appengine@v0.2.0
+      with:
+        deliverables: app_engine/app.yaml
+       #deliverables: ${{ inputs.artifact_name }}/app_engine/app.yaml 
+        version: v1
+        project_id: 'third-current-338811'
       
-    - name: 'Access secret'
-      run: |-
-          curl --request POST \
-          'https://dialogflow.googleapis.com/v2/projects/third-current-338811/agent:restore?' \
-          --header 'Authorization: Bearer ${{steps.auth.outputs.access_token}}' \
-          --header 'Accept: application/json' \
-          --header 'Content-Type: application/json' \
-          --data '{"agentUri":"${{ steps.upload-file.outputs.uploaded }}"}' \
-          --compressed
-    
-    - name: 'Change credentials'
-      run: |-
-         curl --request PATCH \
-          'https://dialogflow.googleapis.com/v2/projects/third-current-338811/agent/fulfillment?updateMask=genericWebService.username%2CgenericWebService.uri%2CgenericWebService.password%2C' \
-          --header 'Authorization: Bearer ${{steps.auth.outputs.access_token}}' \
-          --header 'Accept: application/json' \
-          --header 'Content-Type: application/json' \
-          --data '{"name":"projects/third-current-338811/agent/fulfillment","enabled":true,"genericWebService":{"uri":"https://21a898f2ac21.ngrok.io/v2beta1/webhook123","username":"test","password":"testuser","isCloudFunction":true}}' \
-          --compressed
 
 
 
