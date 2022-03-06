@@ -42,7 +42,14 @@ jobs:
     - name: Create a Env file
       run:  |
         touch app_engine/.env
+<<<<<<< HEAD
         shell:  bash
+=======
+      #  touch ${{ inputs.artifact_name }}/app_engine/env.yaml  
+      #  echo '${{ steps.secrets.outputs.token }}' >> app_engine/.env
+      # echo '${{ steps.secrets.outputs.token }}' >> ${{ inputs.artifact_name }}/app_engine/env.yaml
+        shell: bash
+>>>>>>> 99314fcd351e297585eaf5f65eec29aabf4d6b3e
       
     - name: Deploy to App Engine
       id: deploy
