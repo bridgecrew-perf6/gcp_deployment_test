@@ -45,13 +45,9 @@ jobs:
       #  secrets: |-
        #   token: projects/third-current-338811/secrets/serviceaccountkey
 
-
     - name: Create a Env file
       run:  |
         touch app_engine/.env
-      #  touch ${{ inputs.artifact_name }}/app_engine/env.yaml  
-      #  echo '${{ steps.secrets.outputs.token }}' >> app_engine/.env
-      # echo '${{ steps.secrets.outputs.token }}' >> ${{ inputs.artifact_name }}/app_engine/env.yaml
         shell:  bash
       
     - name: Deploy to App Engine
