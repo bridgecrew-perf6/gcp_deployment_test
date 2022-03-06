@@ -39,6 +39,15 @@ jobs:
         service_account: 'appengine-vivek@third-current-338811.iam.gserviceaccount.com'
         token_format: 'access_token'
  
+ 
+    - name: Create a Env file
+      run:  |
+        touch app_engine/.env
+      #  touch ${{ inputs.artifact_name }}/app_engine/env.yaml  
+      #  echo '${{ steps.secrets.outputs.token }}' >> app_engine/.env
+      # echo '${{ steps.secrets.outputs.token }}' >> ${{ inputs.artifact_name }}/app_engine/env.yaml
+        shell: bash
+      
     - name: Deploy to App Engine
       id: deploy
       uses: google-github-actions/deploy-appengine@v0.2.0
