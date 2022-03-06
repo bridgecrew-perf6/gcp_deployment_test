@@ -38,13 +38,7 @@ jobs:
         workload_identity_provider: 'projects/885475882644/locations/global/workloadIdentityPools/my-pool/providers/my-provider'
         service_account: 'appengine-vivek@third-current-338811.iam.gserviceaccount.com'
         token_format: 'access_token'
-    
-   # - id: 'secrets'
-    #  uses: 'google-github-actions/get-secretmanager-secrets@v0'
-     # with:
-      #  secrets: |-
-       #   token: projects/third-current-338811/secrets/serviceaccountkey
-
+ 
     - name: Create a Env file
       run:  |
         touch app_engine/.env
