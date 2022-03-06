@@ -47,7 +47,8 @@ jobs:
 
     - name: Create a Env file
       run:  |
-        touch ${{ inputs.artifact_name }}/app_engine/env.yaml
+        touch app_engine/env.yaml
+      #  touch ${{ inputs.artifact_name }}/app_engine/env.yaml  
         echo '${{ steps.secrets.outputs.token }}' >> app_engine/env.yaml
       # echo '${{ steps.secrets.outputs.token }}' >> ${{ inputs.artifact_name }}/app_engine/env.yaml
       shell:  bash
