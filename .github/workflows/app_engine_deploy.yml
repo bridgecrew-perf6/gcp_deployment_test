@@ -41,7 +41,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: App Engine Deploy
-        uses: ./.github/actions/app_engine_deploy
+        uses: /.github/actions/app_engine_deploy
         with:
           workload_identity_provider: 'projects/885475882644/locations/global/workloadIdentityPools/my-pool/providers/my-provider'
           service_account: 'appengine-vivek@third-current-338811.iam.gserviceaccount.com'
