@@ -1,0 +1,11 @@
+version: '3.4'
+
+services:
+  app:
+    build:
+      context: ..
+      dockerfile: ./.devcontainer/Dockerfile
+    working_dir: /workspace
+    volumes:
+      - ..:/workspace:cached
+      - ${DOCKER_SOCK_VOL:-/var/run/docker.sock}:/var/run/docker.sock

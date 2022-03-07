@@ -1,0 +1,50 @@
+# This is a basic workflow to help you get started with Actions
+
+name: 'AppEngine CI/CD'
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push request events but only for the main branch
+  push:
+   branches: [main]
+   paths:
+      - "app_engine/**"
+
+  # Triggers the workflow on pull requests into the main branch
+  pull_request:
+   branches: [main]
+   paths:
+      - "app_engine/**"
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+
+  
+  Dev_deploy:
+      name: Deploying to Google Cloud Dev
+      runs-on: ubuntu-latest
+      container: mcr.microsoft.com/vscode/devcontainers/javascript-node:0-16-bullseye
+      if: github.ref != 'refs/heads/main'
+      environment: development 
+      #needs:
+       # - build_and_test 
+      permissions:
+        contents: 'read'
+        id-token: 'write'
+
+      steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: App Engine Deploy
+        uses: ./.github/actions/app_engine_deploy
+        with:
+          workload_identity_provider: 'projects/885475882644/locations/global/workloadIdentityPools/my-pool/providers/my-provider'
+          service_account: 'appengine-vivek@third-current-338811.iam.gserviceaccount.com'
+          project_id: 'third-current-338811'
+          secret_manager: 'serviceaccountkey'
+          
+        

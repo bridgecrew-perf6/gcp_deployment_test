@@ -1,0 +1,30 @@
+{
+	"name": "Chatbot CCAI",
+	"dockerComposeFile": [
+		"docker-compose.yml",
+		"vscode-override.yml",
+	],
+	"service": "app",
+	"workspaceFolder": "/workspace",
+	"settings": {
+		"[typescript]": {
+			"editor.tabSize": 2,
+			"editor.insertSpaces": true
+		},
+		"[typescriptreact]": {
+			"editor.tabSize": 2,
+			"editor.insertSpaces": true
+		},
+	},
+	"extensions": [
+		"dbaeumer.vscode-eslint",
+		"ms-azuretools.vscode-docker",
+	],
+	"forwardPorts": [3000],
+	"portsAttributes": {
+		"3000": {
+			"label": "Express",
+		}
+	},
+	"postStartCommand": "make install && make setup",
+}
