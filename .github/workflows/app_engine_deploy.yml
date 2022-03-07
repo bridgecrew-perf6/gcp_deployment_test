@@ -27,7 +27,7 @@ jobs:
       name: Deploying to Google Cloud Dev
       runs-on: ubuntu-latest
       container: mcr.microsoft.com/vscode/devcontainers/javascript-node:0-16-bullseye
-      if: github.ref = 'refs/heads/main'
+      if: github.ref == 'refs/heads/main'
       #if: github.ref != 'refs/heads/main'
       environment: development 
       #needs:
